@@ -5,6 +5,7 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let cors = require('cors');
 const bodyParser = require("body-parser");
+const MongoClient = require('mongodb').MongoClient;
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
@@ -12,6 +13,7 @@ let aws_cloudRouter = require('./routes/aws_cloud');
 let aws_robomaker = require('./routes/aws_robomaker');
 let aws_cloudwatch = require('./routes/aws_cloudwatch');
 let robotcontroller = require('./routes/robot_controller');
+let robotinteraction = require('./routes/robot_interaction');
 
 let app = express();
 
@@ -50,12 +52,24 @@ app.use(bodyParser.urlencoded({
  */
 app.use(bodyParser.json());
 
+const url = 'mongodb+srv://warehouse:warehouse_simulation@warehouse-simulation.pypjo.mongodb.net/warehouse?retryWrites=true&w=majority';
+
+// Database Name
+const dbName = 'warehouse-simulation';
+const client = new MongoClient(url);
+
+// Use connect method to connect to the server
+client.connect(function(err) {
+  console.log('Connected successfully to server');
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/aws_user', aws_cloudRouter);
 app.use('/aws_robomaker', aws_robomaker);
 app.use('/aws_cloudwatch', aws_cloudwatch);
 app.use('/robot_controller', robotcontroller);
+app.use('/robot_interaction', robotinteraction);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,88 @@
+doctype html
+head
+    title Warehouse Simulation Cloud
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    // ===============================================================================================
+    link(rel='icon' type='image/png' href='../../images/icons/favicon.ico')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../vendor/bootstrap/css/bootstrap.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../vendor/animate/animate.css')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../vendor/select2/select2.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../vendor/perfect-scrollbar/perfect-scrollbar.css')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../stylesheets/util.css')
+    link(rel='stylesheet' type='text/css' href='../../stylesheets/main.css')
+    // ===============================================================================================
+body
+    input#simulationId(type='hidden' name='simulation_id' value='#{simulation_id}')
+    .limiter
+        .container-table100
+            .wrap-table100
+                .table100
+                    table#tblSimulationsLogs
+                        thead
+                            tr.table100-head
+                                th.column Logstream Name
+                                th.column Creation Time
+                                th.column ARN
+                                th.column Stored Bytes
+                                th.column Details
+                        tbody#tbodySimulationsLogs
+                            each val in message.logStreams
+                                tr
+                                    td= val.logStreamName
+                                    td= val.creationTime
+                                    td= val.arn
+                                    td= val.storedBytes
+                                    td
+                                        a(id="#{simulation_id}" href='#' onclick="showlogDetails(this)") Details
+
+            #simulationLog.modal
+                // Modal content
+                .modal-content
+                    .modal-header
+                        h2 Simulation Log
+                        span.closeSimulationLog(onclick="closeSimulationLogModal()") &times;
+                    .modal-body
+                        table#tblSimulationLog
+                            thead
+                                tr.table100-head
+                                    th.column Line Number
+                                    th.column Log Line
+                            tbody#tbodySimulationsLog
+                                tr
+                                    td(colspan=2)
+                                        label(style="color: red") No Records found
+
+            #robotLog.modal
+                // Modal content
+                .modal-content
+                    .modal-header
+                        h2 Robot Log
+                        span.closeRobotLog(onclick="closeRobotLogModal()") &times;
+                    .modal-body
+                        table#tblRobotLog
+                            thead
+                                tr.table100-head
+                                    th.column Line Number
+                                    th.column Log Line
+                            tbody#tbodyRobotLog
+                                tr
+                                    td(colspan=2)
+                                        label(style="color: red") No Records found
+
+// ===============================================================================================
+script(src='../../vendor/jquery/jquery-3.2.1.min.js')
+// ===============================================================================================
+script(src='../../vendor/bootstrap/js/popper.js')
+script(src='../../vendor/bootstrap/js/bootstrap.min.js')
+// ===============================================================================================
+script(src='../../vendor/select2/select2.min.js')
+// ===============================================================================================
+script(src='../../javascripts/logs.js')
