@@ -5,6 +5,52 @@ AWS.config.update({region: 'us-east-2'});
 let iam = new AWS.IAM({apiVersion: '2010-05-08'});
 let router = express.Router();
 
+/* GET get user details. */
+router.get('/view_user_details/:username', function(req, res, next) {
+    let params = {
+        UserName: req.params.username
+    };
+
+    iam.getLoginProfile(params, function(err, data) {
+        if (err) {
+            if (err.message.includes("cannot be found.")){
+                res.render('aws_users', { title: "Warehouse Simulation Cloud", message: { data: data, account_id: 0 } });
+            } else{
+                res.send({
+                    message: err,
+                    error: err.stack
+                });
+            }
+        } else {
+            res.render('aws_users', { title: "Warehouse Simulation Cloud", message: { data: data, account_id: 257034989243 } });
+        }
+    });
+});
+
+/* GET get user details. */
+router.get('/get_user_detail/:username', function(req, res, next) {
+    let params = {
+        UserName: req.params.username
+    };
+
+    iam.getLoginProfile(params, function(err, data) {
+        if (err) {
+            res.send({
+                message: err,
+                error: err.stack
+            });
+        } else {
+            res.send({
+                message: {
+                    data: data,
+                    account_id: 257034989243
+                },
+                error: null
+            });
+        }
+    });
+});
+
 /* POST Create aws credentials. */
 router.post('/create_account', function(req, res, next) {
     let params = {

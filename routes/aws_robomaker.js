@@ -41,16 +41,32 @@ router.get('/get_simulation', function(req, res, next) {
 
 /* POST Create aws credentials. */
 router.post('/start_simulation', function(req, res, next) {
-    let params = {
-        UserName: req.body.username
-    };
+    let sim_name = req.body.robotName;
+    res.send({
+        message: {
+            simlation_name: sim_name,
+            user: "Ragini",
+            status: "Pending",
+            data: "Simulation will be started in 5 minutes. Please login to your aws account to view the simulation",
+            start_datetime: new Date()
+        },
+        error: null
+    });
 });
 
 /* POST Create aws credentials. */
 router.post('/stop_simulation', function(req, res, next) {
-    let params = {
-        UserName: req.body.username
-    };
+    let sim_name = req.body.robotName;
+    res.send({
+        message: {
+            simlation_name: sim_name,
+            user: "Ragini",
+            status: "Stoping",
+            data: "Simulation will be started in 5 minutes. Please login to your aws account to view the simulation",
+            stop_datetime: new Date()
+        },
+        error: null
+    });
 });
 
 /* GET Create aws credentials. */

@@ -13,7 +13,7 @@
                     let sim = data.message.simulations[i].arn.split('/');
                     html = html + "<tr>";
                     html = html + ' <td class="column">' + sim[1] + '</td>';
-                    html = html + ' <td class="column">' + data.message.simulations[i].robotApplicationNames[0] + '</td>';
+                    html = html + ' <td class="column"> robot-application</td>';
                     html = html + ' <td class="column">' + data.message.simulations[i].arn + '</td>';
                     html = html + ' <td class="column">Ragini</td>';
                     if (data.message.simulations[i].status == "Canceled"){

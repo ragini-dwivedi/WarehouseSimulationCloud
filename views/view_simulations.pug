@@ -36,9 +36,13 @@ body
                         a#navbardrop.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
                             | AWS
                         .dropdown-menu.sm-menu
-                            a.dropdown-item(href='#') Create User
-                            a.dropdown-item(href='#') Delete User
-                            a.dropdown-item(href='#') Update User
+                            a.dropdown-item(href='/aws_user/view_user_details/Ragini') users
+                    li.nav-item.dropdown.dmenu
+                        a#navbardrop.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+                            | Robomaker
+                        .dropdown-menu.sm-menu
+                            a.dropdown-item(href='/robot_interaction/view_robot_interaction') Simulation
+                            a.dropdown-item(href='/robot_interaction/view_robot_navigation') Navigation
 
     .limiter
         .container-table100

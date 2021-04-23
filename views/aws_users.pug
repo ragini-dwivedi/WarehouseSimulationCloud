@@ -1,0 +1,147 @@
+doctype html
+head
+    title Warehouse Simulation Cloud
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    // ===============================================================================================
+    link(rel='icon' type='image/png' href='../../images/icons/favicon.ico')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../vendor/bootstrap/css/bootstrap.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../vendor/animate/animate.css')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../vendor/select2/select2.min.css')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../vendor/perfect-scrollbar/perfect-scrollbar.css')
+    // ===============================================================================================
+    link(rel='stylesheet' type='text/css' href='../../stylesheets/util.css')
+    link(rel='stylesheet' type='text/css' href='../../stylesheets/main.css')
+    // ===============================================================================================
+body
+    nav.navbar.navbar-expand-sm.navbar-light.bg-light
+        div(style="width: 20%")
+            button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarTogglerDemo03' aria-controls='navbarTogglerDemo03' aria-expanded='false' aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            h5 Warehouse Simulation Cloud
+        div(style="width: 80%")
+            #navbarTogglerDemo03.collapse.navbar-collapse
+                ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+                    li.nav-item
+                        a.nav-link(href='/view_simulations')
+                            | View Simulation
+                            span.sr-only (current)
+                    li.nav-item.dropdown.dmenu
+                        a#navbardrop.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+                            | AWS
+                        .dropdown-menu.sm-menu
+                            a.dropdown-item(href='/aws_user/view_user_details/Ragini') users
+                    li.nav-item.dropdown.dmenu
+                        a#navbardrop.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+                            | Robomaker
+                        .dropdown-menu.sm-menu
+                            a.dropdown-item(href='/robot_interaction/view_robot_interaction') Simulation
+                            a.dropdown-item(href='/robot_interaction/view_robot_navigation') Navigation
+
+    .limiter
+        .container-table100
+            .wrap-table100
+                .table100
+                    if message.data == null
+                        button.btn.btn-primary(type='button' onclick="adduser(this)") Add User
+                    br
+                    br
+                    table#tblAwsUsers
+                        thead
+                            tr.table100-head
+                                th.column UserName
+                                th.column CreationDate
+                                th.column AccountId
+                                th.column Edit
+                                th.column Delete
+                        tbody#tbodyAwsUsers
+                            if message.data == null
+                                tr
+                                    td(colspan=5)
+                                        label(style="color: red") No records found.
+                            else
+                                tr
+                                    td= message.data.LoginProfile.UserName
+                                    td= message.data.LoginProfile.CreateDate
+                                    td= message.account_id
+                                    td
+                                        a(href='#' onclick="edituser(this)")
+                                            img(src='../../images/edit.png' style="height: 32px; width: 32px" title="Edit")
+                                    td
+                                        a(href='#' onclick="deleteuser(this)")
+                                            img(src='../../images/delete.png' style="height: 32px; width: 32px" title="Delete")
+
+
+    #userDetails.modal
+        // Modal content
+        .modal-content
+            .modal-header
+                h2 User Details
+                span.closeSimulationLog(onclick="closeusermodal(this)") &times;
+            .modal-body
+                form
+                    .form-group.row
+                        label.col-sm-2.col-form-label(for='txtusername') Email
+                        .col-sm-10
+                            input#txtusername.form-control(type='text' readonly='' value='username' style="border 1px;")
+                    .form-group.row
+                        label.col-sm-2.col-form-label(for='txtpassword') Password
+                        .col-sm-10
+                            input#txtpassword.form-control(type='password' placeholder='Password' style="border 1px;")
+                    .form-group.row(style="float: right")
+                        .col-sm-3
+                        .col-sm-3
+                            button.btn.btn-primary(type='button' onclick="saveuser(this)") Save
+                        .col-sm-3
+                            button.btn.btn-secondary(type='button' onclick="closeusermodal(this)") Cancel
+                        .col-sm-1
+
+    #adduserDetails.modal
+        // Modal content
+        .modal-content
+            .modal-header
+                h2 Add User Details
+                span.closeSimulationLog(onclick="closeaddusermodal()") &times;
+            .modal-body
+                form
+                    .form-group.row
+                        label.col-sm-2.col-form-label(for='txtAddusername') Email
+                        .col-sm-10
+                            input#txtAddusername.form-control(type='text' value='username' style="border 1px;")
+                    .form-group.row
+                        label.col-sm-2.col-form-label(for='txtAddpassword') Password
+                        .col-sm-10
+                            input#txtAddpassword.form-control(type='password' placeholder='Password' style="border 1px;")
+                    .form-group.row(style="float: right")
+                        .col-sm-3
+                        .col-sm-3
+                            button.btn.btn-primary(type='button' onclick="adduserdetails(this)") Save
+                        .col-sm-3
+                            button.btn.btn-secondary(type='button' onclick="closeaddusermodal(this)") Cancel
+                        .col-sm-1
+
+
+// ===============================================================================================
+script(src='../../vendor/jquery/jquery-3.2.1.min.js')
+// ===============================================================================================
+script(src='../../vendor/bootstrap/js/popper.js')
+script(src='../../vendor/bootstrap/js/bootstrap.min.js')
+// ===============================================================================================
+script(src='../../vendor/select2/select2.min.js')
+// ===============================================================================================
+script(src='../../javascripts/user.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js')
+script(type='text/javascript').
+    $(document).ready(function () {
+        $('.navbar-light .dmenu').hover(function () {
+            $(this).find('.sm-menu').first().stop(true, true).slideDown(150);
+        }, function () {
+            $(this).find('.sm-menu').first().stop(true, true).slideUp(105)
+        });
+    });

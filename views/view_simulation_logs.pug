@@ -20,6 +20,29 @@ head
     link(rel='stylesheet' type='text/css' href='../../stylesheets/main.css')
     // ===============================================================================================
 body
+    nav.navbar.navbar-expand-sm.navbar-light.bg-light
+        div(style="width: 20%")
+            button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarTogglerDemo03' aria-controls='navbarTogglerDemo03' aria-expanded='false' aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            h5 Warehouse Simulation Cloud
+        div(style="width: 80%")
+            #navbarTogglerDemo03.collapse.navbar-collapse
+                ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+                    li.nav-item
+                        a.nav-link(href='/view_simulations')
+                            | View Simulation
+                            span.sr-only (current)
+                    li.nav-item.dropdown.dmenu
+                        a#navbardrop.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+                            | AWS
+                        .dropdown-menu.sm-menu
+                            a.dropdown-item(href='/aws_user/view_user_details/Ragini') users
+                    li.nav-item.dropdown.dmenu
+                        a#navbardrop.nav-link.dropdown-toggle(href='#' data-toggle='dropdown')
+                            | Robomaker
+                        .dropdown-menu.sm-menu
+                            a.dropdown-item(href='/robot_interaction/view_robot_interaction') Simulation
+                            a.dropdown-item(href='/robot_interaction/view_robot_navigation') Navigation
     input#simulationId(type='hidden' name='simulation_id' value='#{simulation_id}')
     .limiter
         .container-table100
@@ -38,7 +61,7 @@ body
                                 tr
                                     td= val.logStreamName
                                     td= val.creationTime
-                                    td= val.arn
+                                    td= val.arn.replace('-deliverychallenge', '-delivery')
                                     td= val.storedBytes
                                     td
                                         a(id="#{simulation_id}" href='#' onclick="showlogDetails(this)") Details
