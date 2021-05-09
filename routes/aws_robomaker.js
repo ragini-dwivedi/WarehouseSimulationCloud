@@ -8,7 +8,6 @@ AWS.config.apiVersions = {
 let robo_maker = new AWS.RoboMaker();
 let router = express.Router();
 const { exec } = require("child_process");
-
 const db = require('../utils/MysqlConfig');
 
 function execute(command, callback) {
